@@ -1,0 +1,25 @@
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.iml
+
+# Env
+.env
+.env.*
+!.env.example
+
+# Java / Spring
+backend/target/
+backend/build/
+backend/.gradle/
+*.class
+*.log
+HELP.md
+
+# Node / React
+frontend/node_modules/
+frontend/dist/
+frontend/coverage/
+npm-debug.log*

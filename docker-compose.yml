@@ -1,0 +1,22 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: splitandgo-db
+    environment:
+      POSTGRES_DB: splitandgo
+      POSTGRES_USER: splitandgo
+      POSTGRES_PASSWORD: splitandgo
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U splitandgo"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # backend e frontend serão adicionados na issue #1
+
+volumes:
+  pgdata:
