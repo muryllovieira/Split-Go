@@ -19,13 +19,40 @@ Plataforma de gestão e rateio inteligente de despesas em grupo (viagens, repúb
 | Camada         | Tecnologia                              |
 | -------------- | --------------------------------------- |
 | Frontend       | React + TypeScript (Vite), Tailwind CSS |
-| Backend        | Java 21 + Spring Boot 3                 |
+| Backend        | Java 21 + Spring Boot 4                 |
 | Banco de dados | PostgreSQL + Flyway                     |
 | Infra local    | Docker Compose                          |
 
 ## Como rodar localmente
 
-_TODO_
+### Com Docker (recomendado)
+
+Pré-requisito: [Docker](https://www.docker.com/) instalado.
+
+```bash
+docker compose up -d --build
+```
+
+| Serviço      | URL                                   |
+| ------------ | ------------------------------------- |
+| Frontend     | http://localhost:3000                 |
+| API          | http://localhost:8080                 |
+| Health check | http://localhost:8080/actuator/health |
+
+### Em modo desenvolvimento
+
+Pré-requisitos: Java 21 e Node 24.
+
+```bash
+# Banco
+docker compose up -d postgres
+
+# Backend (http://localhost:8080)
+cd backend && ./mvnw spring-boot:run
+
+# Frontend (http://localhost:5173) — chamadas /api são redirecionadas ao backend
+cd frontend && npm install && npm run dev
+```
 
 ## Arquitetura e Infraestrutura
 
