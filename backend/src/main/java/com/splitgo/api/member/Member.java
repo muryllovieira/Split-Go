@@ -3,8 +3,6 @@ package com.splitgo.api.member;
 import java.time.Instant;
 import java.util.UUID;
 
-import org.hibernate.annotations.CreationTimestamp;
-
 import com.splitgo.api.group.Group;
 
 import jakarta.persistence.Column;
@@ -15,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
 @Entity
@@ -32,7 +31,6 @@ public class Member {
     @Column(nullable = false, length = 60)
     private String name;
 
-    @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
 
@@ -52,6 +50,11 @@ public class Member {
         return name;
     }
 
+    @PrePersist
+    void onCreate() {
+        this.createdAt = Instant.now();
+    }
+
     public Group getGroup() {
         return group;
     }
@@ -59,4 +62,5 @@ public class Member {
     public Instant getCreatedAt() {
         return createdAt;
     }
+
 }
