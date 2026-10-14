@@ -15,10 +15,9 @@ public record CreateGroupRequest(
         @NotBlank(message = "A moeda base é obrigatória")
         @Pattern(regexp = "^[A-Z]{3}$", message = "A moeda deve ser um código ISO de 3 letras (ex: BRL)")
         String baseCurrency,
-    
-        @NotNull 
+
+        @NotNull(message = "A lista de integrantes é obrigatória")
         @Size(min = 2, message = "O grupo precisa de pelo menos 2 integrantes")
-        List<@NotBlank @Size(max = 60) String> members
-    ) {
-            
+        List<@NotBlank(message = "O nome do integrante é obrigatório")
+             @Size(max = 60, message = "O nome do integrante deve ter no máximo 60 caracteres") String> members) {
 }
