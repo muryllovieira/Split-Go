@@ -17,35 +17,46 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-@Entity                       
-@Table(name = "members")       
+@Entity
+@Table(name = "members")
 public class Member {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)   
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "group_id", nullable = false)
     private Group group;
 
-    @Column(nullable = false, length = 60)           
+    @Column(nullable = false, length = 60)
     private String name;
 
-    @CreationTimestamp                                
+    @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
 
-    protected Member() {                               
+    protected Member() {
     }
 
-    public Member(Group group, String name) {  
+    public Member(Group group, String name) {
         this.group = group;
         this.name = name;
     }
 
-    public UUID getId() { return id; }                
-    public String getName() { return name; }
-    public Group getGroup() { return group; }
-    public Instant getCreatedAt() { return createdAt; }
+    public UUID getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
 }
