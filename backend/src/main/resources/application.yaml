@@ -6,7 +6,6 @@ spring:
     username: ${DB_USERNAME:splitandgo}
     password: ${DB_PASSWORD:splitandgo}
   jpa:
-    # Schema é responsabilidade do Flyway; o Hibernate apenas valida
     hibernate:
       ddl-auto: validate
     open-in-view: false
