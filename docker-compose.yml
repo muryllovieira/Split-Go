@@ -16,7 +16,5 @@ services:
       timeout: 5s
       retries: 10
 
-  # backend e frontend serão adicionados na issue #1
-
 volumes:
   pgdata:
