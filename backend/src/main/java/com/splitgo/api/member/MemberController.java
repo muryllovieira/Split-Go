@@ -1,8 +1,11 @@
 package com.splitgo.api.member;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,5 +32,16 @@ public class MemberController {
     @ResponseStatus(HttpStatus.CREATED)
     public MemberResponse create(@PathVariable UUID groupId, @Valid @RequestBody CreateMemberRequest request) {
         return memberService.create(groupId, request);
+    }
+
+    @GetMapping
+    public List<MemberResponse> list(@PathVariable UUID groupId) {
+        return memberService.list(groupId);
+    }
+
+    @DeleteMapping("/{memberId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void remove(@PathVariable UUID groupId, @PathVariable UUID memberId) {
+        memberService.remove(groupId, memberId);
     }
 }
