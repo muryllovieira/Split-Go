@@ -11,8 +11,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+import org.springframework.stereotype.Component;
+
 import com.splitgo.api.shared.BusinessException;
 
+@Component
 public class SplitCalculator {
 
     private static final BigDecimal CENT = new BigDecimal("0.01");
