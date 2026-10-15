@@ -79,6 +79,26 @@ public class ExpenseService {
         return ExpenseResponse.from(expenseRepository.save(expense));
     }
 
+    @Transactional(readOnly = true)
+    public ExpenseResponse get(UUID groupId, UUID expenseId) {
+        if (!groupRepository.existsById(groupId)) {
+            throw new NotFoundException("Grupo não encontrado: " + groupId);
+        }
+        Expense expense = expenseRepository.findByIdAndGroup_Id(expenseId, groupId)
+                .orElseThrow(() -> new NotFoundException("Despesa não encontrada: " + expenseId));
+        return ExpenseResponse.from(expense);
+    }
+
+    @Transactional(readOnly = true)
+    public List<ExpenseResponse> list(UUID groupId) {
+        if (!groupRepository.existsById(groupId)) {
+            throw new NotFoundException("Grupo não encontrado: " + groupId);
+        }
+        return expenseRepository.findByGroup_IdOrderByExpenseDateDescCreatedAtDesc(groupId).stream()
+                .map(ExpenseResponse::from)
+                .toList();
+    }
+
     private Participant toParticipant(Map<UUID, Member> groupMembers, ParticipantRequest participant) {
         findMember(groupMembers, participant.memberId());
         return new Participant(participant.memberId(), participant.value());

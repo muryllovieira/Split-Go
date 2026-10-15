@@ -1,8 +1,10 @@
 package com.splitgo.api.expense;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,5 +33,18 @@ public class ExpenseController {
             @PathVariable UUID groupId,
             @Valid @RequestBody CreateExpenseRequest request) {
         return expenseService.create(groupId, request);
+    }
+
+    @GetMapping
+    public List<ExpenseResponse> list(
+            @PathVariable UUID groupId) {
+        return expenseService.list(groupId);
+    }
+
+    @GetMapping("/{expenseId}")
+    public ExpenseResponse get(
+            @PathVariable UUID groupId,
+            @PathVariable UUID expenseId) {
+        return expenseService.get(groupId, expenseId);
     }
 }
