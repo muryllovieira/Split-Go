@@ -56,10 +56,7 @@ public class SettlementService {
     }
 
     private static MemberBalance toMemberBalance(MemberBalanceView view) {
-        BigDecimal balance = view.getPaid()
-                .subtract(view.getConsumed())
-                .add(view.getSent())
-                .subtract(view.getReceived());
+        BigDecimal balance = view.getBalance();
         return new MemberBalance(view.getMemberId(), view.getName(), view.getPaid(), view.getConsumed(),
                 view.getSent(), view.getReceived(), balance);
     }

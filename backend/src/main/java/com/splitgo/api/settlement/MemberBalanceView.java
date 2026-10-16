@@ -16,4 +16,8 @@ public interface MemberBalanceView {
     BigDecimal getSent();
 
     BigDecimal getReceived();
+
+    default BigDecimal getBalance() {
+        return getPaid().subtract(getConsumed()).add(getSent()).subtract(getReceived());
+    }
 }
