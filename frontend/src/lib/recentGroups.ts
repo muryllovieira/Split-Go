@@ -16,8 +16,9 @@ export function getRecentGroups(): RecentGroup[] {
 export function rememberGroup(group: RecentGroup) {
   try {
     const others = getRecentGroups().filter((g) => g.id !== group.id);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify([group, ...others].slice(0, MAX_RECENT)));
-  } catch {
-    // Sem localStorage (aba anônima, por exemplo): a lista de recentes só não é salva
-  }
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify([group, ...others].slice(0, MAX_RECENT)),
+    );
+  } catch {}
 }
