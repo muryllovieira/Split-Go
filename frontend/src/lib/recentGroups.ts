@@ -20,5 +20,7 @@ export function rememberGroup(group: RecentGroup) {
       STORAGE_KEY,
       JSON.stringify([group, ...others].slice(0, MAX_RECENT)),
     );
-  } catch {}
+  } catch {
+    // Sem localStorage (ex: aba anônima): a lista de recentes só não é salva
+  }
 }
