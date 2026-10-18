@@ -3,7 +3,10 @@ import { groupsApi } from "../api/groups";
 
 export function useMembers(groupId: string) {
   const queryClient = useQueryClient();
-  const refresh = () => queryClient.invalidateQueries({ queryKey: ["members", groupId] });
+  const refresh = () => {
+    queryClient.invalidateQueries({ queryKey: ["members", groupId] });
+    queryClient.invalidateQueries({ queryKey: ["settlement", groupId] });
+  };
 
   const list = useQuery({
     queryKey: ["members", groupId],

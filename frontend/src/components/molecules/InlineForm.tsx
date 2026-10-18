@@ -26,7 +26,9 @@ export default function InlineForm({
     try {
       await onSubmit(value.trim());
       setValue("");
-    } catch {}
+    } catch {
+      // O erro é exibido por quem chamou; o texto fica no campo para correção
+    }
   }
 
   return (
