@@ -3,7 +3,8 @@
 Plataforma de gestão e rateio inteligente de despesas em grupo (viagens, repúblicas, eventos): lance os gastos, divida de forma igual, por porcentagem ou por valor fixo, e descubra **quem paga quem com o menor número de transferências**.
 
 - 📋 **Board do projeto:** https://github.com/users/muryllovieira/projects/1
-- 🌐 **Aplicação online:** _em breve_
+- 🌐 **Aplicação online:** https://split-go-delta.vercel.app
+  - API: https://split-go-api.onrender.com/actuator/health — plano gratuito: após 15 min sem uso, a primeira requisição pode levar ~50 s para "acordar" o servidor.
 
 ## Sumário
 
@@ -105,7 +106,19 @@ flowchart LR
 - **Configuração por variáveis de ambiente** (`DB_URL`, `DB_USERNAME`, `DB_PASSWORD`, `PORT`), com padrões para rodar local. O mesmo artefato roda em qualquer ambiente.
 - **Imagens Docker multi-stage:** o backend compila com JDK e roda só com JRE, com usuário sem privilégio de root; o front gera o build com Node e é servido pelo nginx.
 
-**Hosting sugerido para produção:** frontend estático na Vercel, API no Render/Railway (container Docker) e PostgreSQL gerenciado no Neon — todos com camada gratuita e deploy a partir do GitHub.
+**Deploy atual (produção):**
+
+```mermaid
+flowchart LR
+    U([Usuário]) --> V["Vercel<br/>front React estático"]
+    V -->|"/api/* (rewrite)"| R["Render<br/>API Spring Boot em Docker"]
+    R -->|"JDBC + SSL"| N[("Neon<br/>PostgreSQL, São Paulo")]
+```
+
+- **Vercel** serve o build do React e, pelo `vercel.json`, repassa `/api/*` para a API (mesmo papel do nginx no Docker: mesma origem, sem CORS) e devolve o `index.html` nas demais rotas, para o link do grupo abrir direto.
+- **Render** constrói a imagem a partir do `backend/Dockerfile`; a configuração vem de variáveis de ambiente (`DB_URL`, `DB_USERNAME`, `DB_PASSWORD`, `PORT`) e o deploy só é concluído quando `/actuator/health` responde `UP`.
+- **Neon** hospeda o PostgreSQL; o Flyway cria o schema automaticamente na primeira subida da API.
+- Todos com camada gratuita e deploy automático a cada merge na `main`.
 
 ### Organização do código
 
